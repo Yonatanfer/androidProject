@@ -1,4 +1,4 @@
-package com.example.yonatanproject.models;
+package com.example.yonatanproject;
 
 public class User {
     private String firstName;

@@ -1,5 +1,7 @@
 package com.example.yonatanproject;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,10 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.yonatanproject.models.User;
+
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -18,11 +19,11 @@ import java.util.List;
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
 
     private final List<User> users;
-    private final FragmentActivity activity;
+    private final Context context;
 
-    public UserAdapter(List<User> users, FragmentActivity activity) {
+    public UserAdapter(List<User> users, Context context) {
         this.users = users;
-        this.activity = activity;
+        this.context = context;
     }
 
     @NonNull
@@ -40,20 +41,39 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         holder.tvName.setText(user.getFirstName() + " " + user.getLastName());
         holder.tvEmail.setText(user.getEmail());
 
-        if (user.getUrl() != null && !user.getUrl().isEmpty()) {
+        if (user.getImageUrl() != null && !user.getImageUrl().isEmpty()) {
             Picasso.get()
-                    .load(user.getUrl())
+                    .load(user.getImageUrl())
                     .placeholder(R.drawable.ic_launcher_background)
                     .into(holder.ivProfile);
         } else {
             holder.ivProfile.setImageResource(R.drawable.ic_launcher_background);
         }
 
-        // לחיצה על המשתמש תפתח את הדיאלוג באמצע המסך
-        holder.itemView.setOnClickListener(v -> {
-            UserDetailsDialog dialog = new UserDetailsDialog(user);
-            dialog.show(activity.getSupportFragmentManager(), "UserDetailsDialog");
-        });
+        // לחיצה על המשתמש תפתח דיאלוג רגיל (לא דרך Fragment)
+        holder.itemView.setOnClickListener(v -> showUserDetailsDialog(user));
+    }
+
+    private void showUserDetailsDialog(User user) {
+        Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.dialog_user_details);
+        dialog.setCancelable(true);
+
+        // קישור לפריטי ה-XML בדיאלוג
+        TextView tvName = dialog.findViewById(R.id.tvName);
+        TextView tvEmail = dialog.findViewById(R.id.tvEmail);
+        ImageView ivProfile = dialog.findViewById(R.id.imgUser);
+
+        tvName.setText(user.getFirstName() + " " + user.getLastName());
+        tvEmail.setText(user.getEmail());
+
+        if (user.getImageUrl() != null && !user.getImageUrl().isEmpty()) {
+            Picasso.get().load(user.getImageUrl()).into(ivProfile);
+        } else {
+            ivProfile.setImageResource(R.drawable.ic_launcher_background);
+        }
+
+        dialog.show();
     }
 
     @Override
@@ -69,7 +89,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             super(itemView);
             tvName = itemView.findViewById(R.id.tvName);
             tvEmail = itemView.findViewById(R.id.tvEmail);
-            ivProfile = itemView.findViewById(R.id.ivProfile);
+            ivProfile = itemView.findViewById(R.id.imgUser);
         }
     }
 }

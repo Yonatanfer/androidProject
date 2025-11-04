@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.example.yonatanproject.models.User;
+import com.example.yonatanproject.User;
 import com.squareup.picasso.Picasso;
 
 public class UserDetailsDialog extends DialogFragment {
@@ -37,8 +37,8 @@ public class UserDetailsDialog extends DialogFragment {
         tvEmail.setText(user.getEmail());
         tvPhone.setText(user.getPhone());
 
-        if (user.getUrl() != null && !user.getUrl().isEmpty()) {
-            Picasso.get().load(user.getUrl()).into(ivProfileLarge);
+        if (user.getImageUrl() != null && !user.getImageUrl().isEmpty()) {
+            Picasso.get().load(user.getImageUrl()).into(ivProfileLarge);
         }
 
         return view;

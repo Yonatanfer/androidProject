@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.example.yonatanproject.models.User;
+import com.example.yonatanproject.User;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.DocumentSnapshot;
 
@@ -28,7 +28,7 @@ public class HomepageActivity extends AppCompatActivity {
         rvUsers = findViewById(R.id.rvUsers);
         db = FirebaseFirestore.getInstance();
         usersList = new ArrayList<>();
-        adapter = new UserAdapter(this, usersList);
+        adapter = new UserAdapter(usersList, this);
 
         rvUsers.setLayoutManager(new LinearLayoutManager(this));
         rvUsers.setAdapter(adapter);

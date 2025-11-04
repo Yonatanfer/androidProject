@@ -13,7 +13,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.widget.*;
 
-import com.example.yonatanproject.models.User;
+import com.example.yonatanproject.User;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;

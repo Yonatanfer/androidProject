@@ -11,34 +11,40 @@
         android:textSize="24sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="20dp" />
 
     <EditText
         android:id="@+id/etLoginEmail"
         android:hint="Email"
+        android:text="ron@gmail.com"
         android:inputType="textEmailAddress"
+        android:minHeight="48dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <EditText
         android:id="@+id/etLoginPass"
         android:hint="Password"
+        android:text="1234"
         android:inputType="textPassword"
+        android:minHeight="48dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp" />
 
     <Button
         android:id="@+id/btnLogin"
         android:text="Login"
+        android:minHeight="48dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp" />
 
     <Button
         android:id="@+id/btnGoToRegister"
         android:text="Not registered? Sign up"
+        android:minHeight="48dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp" />
 </LinearLayout>
