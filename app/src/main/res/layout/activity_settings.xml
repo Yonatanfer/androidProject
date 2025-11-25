@@ -1,0 +1,50 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center_horizontal">
+
+    <!-- כותרת גדולה למעלה -->
+    <TextView
+        android:id="@+id/tvSettingsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Settings"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="32dp" />
+
+    <!-- כפתורי התחלה ועצירה -->
+    <Button
+        android:id="@+id/btnStart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Start Music" />
+
+    <Button
+        android:id="@+id/btnStop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Stop Music"
+        android:layout_marginTop="16dp" />
+
+    <!-- טקסט "Volume" מעל ה-SeekBar -->
+    <TextView
+        android:id="@+id/tvVolume"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Volume"
+        android:textSize="20sp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"/>
+
+    <!-- SeekBar -->
+    <SeekBar
+        android:id="@+id/volumeBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="100" />
+</LinearLayout>

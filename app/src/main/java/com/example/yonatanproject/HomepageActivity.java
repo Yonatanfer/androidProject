@@ -4,10 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.yonatanproject.User;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.DocumentSnapshot;
 
@@ -19,6 +20,7 @@ public class HomepageActivity extends AppCompatActivity {
     FirebaseFirestore db;
     ArrayList<User> usersList;
     UserAdapter adapter;
+    Button btnSettings; // הכפתור
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,8 @@ public class HomepageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_homepage);
 
         rvUsers = findViewById(R.id.rvUsers);
+        btnSettings = findViewById(R.id.btnSettings); // מצביע לכפתור
+
         db = FirebaseFirestore.getInstance();
         usersList = new ArrayList<>();
         adapter = new UserAdapter(usersList, this);
@@ -34,6 +38,12 @@ public class HomepageActivity extends AppCompatActivity {
         rvUsers.setAdapter(adapter);
 
         loadUsers();
+
+        // לחיצה על הכפתור פותחת את SettingsActivity
+        btnSettings.setOnClickListener(v -> {
+            Intent intent = new Intent(HomepageActivity.this, SettingsActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void loadUsers() {
