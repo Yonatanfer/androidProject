@@ -6,7 +6,7 @@ import android.widget.*;
 import android.content.Intent;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     EditText etEmail, etPass;
     Button btnLogin, btnGoToRegister;
@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         etEmail = findViewById(R.id.etLoginEmail);
         etPass = findViewById(R.id.etLoginPass);

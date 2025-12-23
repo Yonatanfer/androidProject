@@ -50,31 +50,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             holder.ivProfile.setImageResource(R.drawable.ic_launcher_background);
         }
 
-        // לחיצה על המשתמש תפתח דיאלוג רגיל (לא דרך Fragment)
-        holder.itemView.setOnClickListener(v -> showUserDetailsDialog(user));
+
     }
 
-    private void showUserDetailsDialog(User user) {
-        Dialog dialog = new Dialog(context);
-        dialog.setContentView(R.layout.dialog_user_details);
-        dialog.setCancelable(true);
-
-        // קישור לפריטי ה-XML בדיאלוג
-        TextView tvName = dialog.findViewById(R.id.tvName);
-        TextView tvEmail = dialog.findViewById(R.id.tvEmail);
-        ImageView ivProfile = dialog.findViewById(R.id.imgUser);
-
-        tvName.setText(user.getFirstName() + " " + user.getLastName());
-        tvEmail.setText(user.getEmail());
-
-        if (user.getImageUrl() != null && !user.getImageUrl().isEmpty()) {
-            Picasso.get().load(user.getImageUrl()).into(ivProfile);
-        } else {
-            ivProfile.setImageResource(R.drawable.ic_launcher_background);
-        }
-
-        dialog.show();
-    }
 
     @Override
     public int getItemCount() {

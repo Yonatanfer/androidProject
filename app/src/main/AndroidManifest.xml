@@ -27,19 +27,14 @@
 
 
         <!-- Receiver you had before -->
-        <receiver
-            android:name=".myCallReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.PHONE_STATE" />
-            </intent-filter>
-        </receiver> <!-- Homepage screen -->
+
         <activity android:name=".HomepageActivity" /> <!-- Register screen -->
         <activity android:name=".RegisterActivity" /> <!-- Login screen (main entry point) -->
         <activity android:name=".SettingsActivity" />
+        <activity android:name=".CreateWorkoutActivity" />
+
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

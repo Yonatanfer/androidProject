@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.widget.*;
 
-import com.example.yonatanproject.User;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
@@ -47,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         btnRegister.setOnClickListener(v -> registerUser());
-        btnGoToLogin.setOnClickListener(v -> startActivity(new Intent(this, MainActivity.class)));
+        btnGoToLogin.setOnClickListener(v -> startActivity(new Intent(this, LoginActivity.class)));
         btnCamera.setOnClickListener(v -> openCamera());
     }
 
@@ -110,7 +109,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 // רק אם יש תמונה – נעלה אותה
                 if (photo != null) {
-                    SimpleUpload upload = new SimpleUpload();
+                    ImageUploader upload = new ImageUploader();
                     try {
                         url = upload.uploadBitmap("profile_" + System.currentTimeMillis() + ".jpg", photo);
                     } catch (IOException e) {
@@ -124,7 +123,7 @@ public class RegisterActivity extends AppCompatActivity {
                 db.collection("users").document(email).set(user)
                         .addOnSuccessListener(aVoid -> {
                             Toast.makeText(this, "Registered successfully!", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(this, MainActivity.class));
+                            startActivity(new Intent(this, LoginActivity.class));
                         })
                         .addOnFailureListener(e -> Toast.makeText(this, "Registration failed", Toast.LENGTH_SHORT).show());
             }

@@ -1,60 +1,63 @@
 package com.example.yonatanproject;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.Toast;
-
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.DocumentSnapshot;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.*;
+import com.google.firebase.firestore.*;
 
 import java.util.ArrayList;
 
 public class HomepageActivity extends AppCompatActivity {
 
-    RecyclerView rvUsers;
-    FirebaseFirestore db;
-    ArrayList<User> usersList;
-    UserAdapter adapter;
-    Button btnSettings; // הכפתור
+    RecyclerView rvWorkouts;
+    WorkoutAdapter adapter;
+    ArrayList<Workout> workouts = new ArrayList<>();
+    String userEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
 
-        rvUsers = findViewById(R.id.rvUsers);
-        btnSettings = findViewById(R.id.btnSettings); // מצביע לכפתור
+        userEmail = getIntent().getStringExtra("userEmail");
 
-        db = FirebaseFirestore.getInstance();
-        usersList = new ArrayList<>();
-        adapter = new UserAdapter(usersList, this);
+        rvWorkouts = findViewById(R.id.rvWorkouts);
+        Button btnStart = findViewById(R.id.btnStartWorkout);
 
-        rvUsers.setLayoutManager(new LinearLayoutManager(this));
-        rvUsers.setAdapter(adapter);
+        adapter = new WorkoutAdapter(workouts);
+        rvWorkouts.setLayoutManager(new LinearLayoutManager(this));
+        rvWorkouts.setAdapter(adapter);
 
-        loadUsers();
-
-        // לחיצה על הכפתור פותחת את SettingsActivity
-        btnSettings.setOnClickListener(v -> {
-            Intent intent = new Intent(HomepageActivity.this, SettingsActivity.class);
-            startActivity(intent);
+        btnStart.setOnClickListener(v -> {
+            Intent i = new Intent(this, CreateWorkoutActivity.class);
+            i.putExtra("userEmail", userEmail);
+            startActivity(i);
         });
+
+        loadWorkouts();
     }
 
-    private void loadUsers() {
-        db.collection("users").get().addOnSuccessListener(query -> {
-            usersList.clear();
-            for (DocumentSnapshot doc : query) {
-                User user = doc.toObject(User.class);
-                usersList.add(user);
-            }
-            adapter.notifyDataSetChanged();
-        }).addOnFailureListener(e ->
-                Toast.makeText(this, "Failed to load users: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadWorkouts();
+    }
+
+    private void loadWorkouts() {
+        FirebaseFirestore.getInstance()
+                .collection("workouts")
+                .whereEqualTo("userEmail", userEmail)
+                .orderBy("date", Query.Direction.DESCENDING)
+                .addSnapshotListener((value, error) -> {
+                    workouts.clear();
+                    if (value != null) {
+                        for (DocumentSnapshot doc : value) {
+                            workouts.add(doc.toObject(Workout.class));
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                });
     }
 }

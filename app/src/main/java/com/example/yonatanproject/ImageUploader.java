@@ -6,7 +6,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class SimpleUpload {
+public class ImageUploader {
 
     // כאן תשנה לשם שלך ול-bucket שלך אם יש צורך
     private final String supabaseUrl = "https://evwzyxuhlpzpsniayqqe.supabase.co";
@@ -14,7 +14,7 @@ public class SimpleUpload {
     private final String bucketName = "Amir";      // שם ה-bucket
     private final String studentName = "Yonatan";  // תיקייה אישית לסטודנט
 
-    public SimpleUpload() {
+    public ImageUploader() {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
     }
