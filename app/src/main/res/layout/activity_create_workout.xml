@@ -1,71 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:padding="24dp"
+    <RadioGroup
+        android:id="@+id/rgExercises"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
+        <RadioButton
+            android:text="Biceps"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Create Workout"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="24dp"/>
+            android:layout_height="wrap_content"/>
 
-        <!-- בחירת תרגיל -->
-        <RadioGroup
-            android:id="@+id/rgExercises"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp">
+        <RadioButton
+            android:text="Chest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
-            <RadioButton
-                android:id="@+id/rbBiceps"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Biceps"
-                android:minHeight="48dp"
-                android:padding="8dp"/>
+        <RadioButton
+            android:text="Lats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RadioGroup>
 
-            <RadioButton
-                android:id="@+id/rbChest"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Chest"
-                android:minHeight="48dp"
-                android:padding="8dp"/>
+    <EditText
+        android:id="@+id/etReps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Reps"
+        android:inputType="number"
+        android:layout_marginTop="16dp"/>
 
-            <RadioButton
-                android:id="@+id/rbLats"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Lats"
-                android:minHeight="48dp"
-                android:padding="8dp"/>
-        </RadioGroup>
-
-        <!-- מספר חזרות -->
-        <EditText
-            android:id="@+id/etReps"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Number of reps"
-            android:inputType="number"
-            android:minHeight="56dp"
-            android:padding="12dp"
-            android:layout_marginBottom="24dp"/>
-
-        <!-- כפתור שמירה -->
-        <Button
-            android:id="@+id/btnSaveWorkout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Save Workout"
-            android:minHeight="56dp"/>
-    </LinearLayout>
-</ScrollView>
+    <Button
+        android:id="@+id/btnSaveWorkout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save Workout"
+        android:layout_marginTop="24dp"/>
+</LinearLayout>

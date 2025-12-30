@@ -25,7 +25,8 @@ public class LoginActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         btnLogin.setOnClickListener(v -> loginUser());
-        btnGoToRegister.setOnClickListener(v -> startActivity(new Intent(this, RegisterActivity.class)));
+        btnGoToRegister.setOnClickListener(v ->
+                startActivity(new Intent(this, RegisterActivity.class)));
     }
 
     private void loginUser() {
@@ -37,18 +38,25 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        db.collection("users").document(email).get().addOnSuccessListener(doc -> {
-            if (doc.exists()) {
-                String dbPass = doc.getString("password");
-                if (dbPass.equals(pass)) {
-                    Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(this, HomepageActivity.class));
-                } else {
-                    Toast.makeText(this, "Wrong password", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show();
-            }
-        });
+        db.collection("users").document(email).get()
+                .addOnSuccessListener(doc -> {
+                    if (doc.exists()) {
+                        String dbPass = doc.getString("password");
+
+                        if (dbPass != null && dbPass.equals(pass)) {
+                            Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
+
+                            Intent intent = new Intent(this, HomepageActivity.class);
+                            intent.putExtra("userEmail", email); // ✅ קריטי
+                            startActivity(intent);
+                            finish();
+
+                        } else {
+                            Toast.makeText(this, "Wrong password", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }

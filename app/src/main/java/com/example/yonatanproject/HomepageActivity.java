@@ -3,9 +3,13 @@ package com.example.yonatanproject;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.*;
-import com.google.firebase.firestore.*;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -23,6 +27,12 @@ public class HomepageActivity extends AppCompatActivity {
 
         userEmail = getIntent().getStringExtra("userEmail");
 
+        if (userEmail == null) {
+            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
         rvWorkouts = findViewById(R.id.rvWorkouts);
         Button btnStart = findViewById(R.id.btnStartWorkout);
 
@@ -35,8 +45,6 @@ public class HomepageActivity extends AppCompatActivity {
             i.putExtra("userEmail", userEmail);
             startActivity(i);
         });
-
-        loadWorkouts();
     }
 
     @Override
@@ -47,17 +55,18 @@ public class HomepageActivity extends AppCompatActivity {
 
     private void loadWorkouts() {
         FirebaseFirestore.getInstance()
-                .collection("workouts")
-                .whereEqualTo("userEmail", userEmail)
-                .orderBy("date", Query.Direction.DESCENDING)
-                .addSnapshotListener((value, error) -> {
+                .collection("users")
+                .document(userEmail)
+                .get()
+                .addOnSuccessListener(doc -> {
+                    User user = doc.toObject(User.class);
                     workouts.clear();
-                    if (value != null) {
-                        for (DocumentSnapshot doc : value) {
-                            workouts.add(doc.toObject(Workout.class));
-                        }
-                        adapter.notifyDataSetChanged();
+
+                    if (user != null && user.getWorkouts() != null) {
+                        workouts.addAll(user.getWorkouts());
                     }
+
+                    adapter.notifyDataSetChanged();
                 });
     }
 }

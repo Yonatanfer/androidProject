@@ -3,7 +3,9 @@ package com.example.yonatanproject;
 import android.os.Bundle;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class CreateWorkoutActivity extends AppCompatActivity {
@@ -34,7 +36,7 @@ public class CreateWorkoutActivity extends AppCompatActivity {
             return;
         }
 
-        String repsStr = etReps.getText().toString();
+        String repsStr = etReps.getText().toString().trim();
         if (repsStr.isEmpty()) {
             Toast.makeText(this, "Enter reps", Toast.LENGTH_SHORT).show();
             return;
@@ -44,16 +46,14 @@ public class CreateWorkoutActivity extends AppCompatActivity {
         String exercise = rb.getText().toString();
         int reps = Integer.parseInt(repsStr);
 
-        Workout workout = new Workout(
-                userEmail,
-                exercise,
-                reps,
-                Timestamp.now()
-        );
+        Workout workout = new Workout(exercise, reps, Timestamp.now());
 
         FirebaseFirestore.getInstance()
-                .collection("workouts")
-                .add(workout)
-                .addOnSuccessListener(doc -> finish());
+                .collection("users")
+                .document(userEmail)
+                .update("workouts", FieldValue.arrayUnion(workout))
+                .addOnSuccessListener(aVoid -> finish())
+                .addOnFailureListener(e ->
+                        Toast.makeText(this, "Save failed", Toast.LENGTH_SHORT).show());
     }
 }
